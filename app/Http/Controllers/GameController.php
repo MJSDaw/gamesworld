@@ -20,4 +20,30 @@ class GameController extends Controller
         }
         return $game;
     }
+
+    public function create(Request $request)
+    {
+        $game = Game::create($request->all());
+        return response()->json($game, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $game = Game::find($id);
+        if (!$game) {
+            return response()->json(['message' => 'Game not found'], 404);
+        }
+        $game->update($request->all());
+        return $game;
+    }
+
+    public function delete($id)
+    {
+        $game = Game::find($id);
+        if (!$game) {
+            return response()->json(['message' => 'Game not found'], 404);
+        }
+        $game->delete();
+        return response()->json(['message' => 'Game deleted'], 204);
+    }
 }

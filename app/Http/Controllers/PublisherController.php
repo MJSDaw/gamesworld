@@ -20,4 +20,30 @@ class PublisherController extends Controller
         }
         return $publisher;
     }
+
+    public function create(Request $request)
+    {
+        $publisher = Publisher::create($request->all());
+        return response()->json($publisher, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $publisher = Publisher::find($id);
+        if (!$publisher) {
+            return response()->json(['message' => 'Publisher not found'], 404);
+        }
+        $publisher->update($request->all());
+        return $publisher;
+    }
+
+    public function delete($id)
+    {
+        $publisher = Publisher::find($id);
+        if (!$publisher) {
+            return response()->json(['message' => 'Publisher not found'], 404);
+        }
+        $publisher->delete();
+        return response()->json(['message' => 'Publisher deleted'], 204);
+    }
 }

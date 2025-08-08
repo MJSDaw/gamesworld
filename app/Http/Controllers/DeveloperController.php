@@ -20,4 +20,30 @@ class DeveloperController extends Controller
         }
         return $developer;
     }
+
+    public function create(Request $request)
+    {
+        $developer = Developer::create($request->all());
+        return response()->json($developer, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $developer = Developer::find($id);
+        if (!$developer) {
+            return response()->json(['message' => 'Developer not found'], 404);
+        }
+        $developer->update($request->all());
+        return $developer;
+    }
+
+    public function delete($id)
+    {
+        $developer = Developer::find($id);
+        if (!$developer) {
+            return response()->json(['message' => 'Developer not found'], 404);
+        }
+        $developer->delete();
+        return response()->json(['message' => 'Developer deleted'], 204);
+    }
 }

@@ -20,4 +20,30 @@ class PlatformController extends Controller
         }
         return $platform;
     }
+
+    public function create(Request $request)
+    {
+        $platform = Platform::create($request->all());
+        return response()->json($platform, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $platform = Platform::find($id);
+        if (!$platform) {
+            return response()->json(['message' => 'Platform not found'], 404);
+        }
+        $platform->update($request->all());
+        return $platform;
+    }
+
+    public function delete($id)
+    {
+        $platform = Platform::find($id);
+        if (!$platform) {
+            return response()->json(['message' => 'Platform not found'], 404);
+        }
+        $platform->delete();
+        return response()->json(['message' => 'Platform deleted'], 204);
+    }
 }
